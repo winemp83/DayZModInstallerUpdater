@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 
-namespace Model
+namespace DayZModel.Model
 {
-    public class BaseModel : INotifyPropertyChanged, IEquatable<BaseModel>, IBaseModel
+    public class BaseModel : INotifyPropertyChanged, IEquatable<BaseModel>
     {
         private string _ID = null;
         public string ID
@@ -46,7 +47,9 @@ namespace Model
 
         protected void RaisePropertyChanged(string property)
         {
+            Debug.WriteLine(property);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+            
         }
 
         public static bool operator ==(BaseModel left, BaseModel right)

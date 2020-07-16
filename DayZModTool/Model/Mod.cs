@@ -1,12 +1,15 @@
-﻿using System;
+﻿using DayZModel.Model;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Model
+namespace DayZModTool.Model
 {
-    public class Mod : BaseModel, IEquatable<Mod>, IMod
+    public class ModModel : BaseModel
     {
         private string _ModID = null;
         private string _ModName = null;
+        private bool _IsActive = true;
 
         public string ModID
         {
@@ -44,7 +47,23 @@ namespace Model
             }
         }
 
-        public Mod(string id = null, string modID = null, string modName = null)
+        public string IsActive
+        {
+            get
+            {
+                return GetBoolValue(_IsActive);
+            }
+            set
+            {
+                if(IsActive != value)
+                {
+                    _IsActive = GetBoolValue(value);
+                    RaisePropertyChanged("IsActive");
+                }
+            }
+        }
+
+        public ModModel(string id = null, string modID = null, string modName = null)
         {
             if (id != null)
                 base.ID = id;
@@ -54,35 +73,17 @@ namespace Model
                 ModName = modName;
         }
 
-        public override bool Equals(object obj)
+        public static string GetBoolValue(bool value)
         {
-            return Equals(obj as Mod);
+            string result =  value.ToString().ToLowerInvariant();
+            return result;
         }
 
-        public bool Equals(Mod other)
-        {
-            return other != null &&
-                   base.Equals(other) &&
-                   ID == other.ID &&
-                   _ModID == other._ModID &&
-                   _ModName == other._ModName &&
-                   ModID == other.ModID &&
-                   ModName == other.ModName;
+        public static bool GetBoolValue(string value) {
+            if (value.ToLowerInvariant().Equals("true"))
+                return true;
+            return false;
         }
 
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(base.GetHashCode(), ID, _ModID, _ModName, ModID, ModName);
-        }
-
-        public static bool operator ==(Mod left, Mod right)
-        {
-            return EqualityComparer<Mod>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(Mod left, Mod right)
-        {
-            return !(left == right);
-        }
     }
 }

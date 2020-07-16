@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Xml;
-using Model;
+using DayZModTool.Model;
 
-namespace XmlDatabase
+namespace DayZModTool.Database.XmlDatabase
 {
-    public class XmlData : IXmlData
+    public class XmlData
     {
         private XmlDocument _Xml;
         private FileStream _File;
-        private string _FilePath;
+        private readonly string _FilePath;
 
         public XmlData()
         {
@@ -21,36 +22,39 @@ namespace XmlDatabase
                 CreateFile();
         }
 
-        public void Add(Mod mod)
+        public void Add(ModModel mod)
         {
             _Xml = new XmlDocument();
             _File = new FileStream(_FilePath, FileMode.Open);
             _Xml.Load(_File);
-            XmlElement cl = _Xml.CreateElement("Mod");
-            cl.SetAttribute("ID", (Count() + 1).ToString());
+            XmlNodeList list = _Xml.GetElementsByTagName("ModModel");
+            XmlElement cl = _Xml.CreateElement("ModModel");
+            cl.SetAttribute("ID", (list.Count + 1).ToString());
             cl.SetAttribute("ModID", mod.ModID);
-            cl.SetAttribute("ModName", mod.ModName); ;
+            cl.SetAttribute("ModName", mod.ModName);
+            cl.SetAttribute("IsActive", mod.IsActive);
             _Xml.DocumentElement.AppendChild(cl);
             _File.Close();
             _Xml.Save(_FilePath);
         }
 
-        public BindingList<Mod> Get(string ID = null)
+        public BindingList<ModModel> Get(string ID = null)
         {
             _Xml = new XmlDocument();
             _File = new FileStream(_FilePath, FileMode.Open);
             _Xml.Load(_File);
-            BindingList<Mod> result = new BindingList<Mod>();
-            XmlNodeList list = _Xml.GetElementsByTagName("Mod");
+            BindingList<ModModel> result = new BindingList<ModModel> ();
+            XmlNodeList list = _Xml.GetElementsByTagName("ModModel");
             for (int i = 0; i < list.Count; i++)
             {
-                XmlElement cl = (XmlElement)_Xml.GetElementsByTagName("Mod")[i];
-                Mod r = new Mod
+                XmlElement cl = (XmlElement)_Xml.GetElementsByTagName("ModModel")[i];
+                ModModel r = new ModModel
                 {
                     ID = cl.GetAttribute("ID"),
                     ModID = cl.GetAttribute("ModID"),
-                    ModName = cl.GetAttribute("ModName")
-                };
+                    ModName = cl.GetAttribute("ModName"),
+                    IsActive = cl.GetAttribute("IsActive")
+            };
                 if (ID != null)
                     if (r.ID == ID)
                     {
@@ -64,20 +68,21 @@ namespace XmlDatabase
             return result;
         }
 
-        public void Edit(Mod mod)
+        public void Edit(ModModel mod)
         {
 
             _Xml = new XmlDocument();
             _File = new FileStream(_FilePath, FileMode.Open);
             _Xml.Load(_File);
-            XmlNodeList list = _Xml.GetElementsByTagName("Mod");
+            XmlNodeList list = _Xml.GetElementsByTagName("ModModel");
             for (int i = 0; i < list.Count; i++)
             {
-                XmlElement cu = (XmlElement)_Xml.GetElementsByTagName("Mod")[i];
+                XmlElement cu = (XmlElement)_Xml.GetElementsByTagName("ModModel")[i];
                 if (cu.GetAttribute("ID") == mod.ID)
                 {
                     cu.SetAttribute("ModID", mod.ModID);
                     cu.SetAttribute("ModName", mod.ModName);
+                    cu.SetAttribute("IsActive", mod.IsActive);
                     break;
                 }
             }
@@ -85,15 +90,15 @@ namespace XmlDatabase
             _Xml.Save(_FilePath);
         }
 
-        public void Remove(Mod mod)
+        public void Remove(ModModel mod)
         {
             _File = new FileStream(_FilePath, FileMode.Open);
             XmlDocument tdoc = new XmlDocument();
             tdoc.Load(_File);
-            XmlNodeList list = tdoc.GetElementsByTagName("Mod");
+            XmlNodeList list = tdoc.GetElementsByTagName("ModModel");
             for (int i = 0; i < list.Count; i++)
             {
-                XmlElement cl = (XmlElement)tdoc.GetElementsByTagName("Mod")[i];
+                XmlElement cl = (XmlElement)tdoc.GetElementsByTagName("ModModel")[i];
                 if (cl.GetAttribute("ID") == mod.ID)
                 {
                     tdoc.DocumentElement.RemoveChild(cl);
@@ -109,7 +114,7 @@ namespace XmlDatabase
             _Xml = new XmlDocument();
             _File = new FileStream(_FilePath, FileMode.Open);
             _Xml.Load(_File);
-            XmlNodeList list = _Xml.GetElementsByTagName("Mod");
+            XmlNodeList list = _Xml.GetElementsByTagName("ModModel");
             _File.Close();
             _Xml.Save(_FilePath);
             return list.Count;
@@ -120,11 +125,11 @@ namespace XmlDatabase
             _Xml = new XmlDocument();
             _File = new FileStream(_FilePath, FileMode.Open);
             _Xml.Load(_File);
-            XmlNodeList list = _Xml.GetElementsByTagName("Mod");
+            XmlNodeList list = _Xml.GetElementsByTagName("ModModel");
             for (int i = 0; i < list.Count; i++)
             {
-                XmlElement cu = (XmlElement)_Xml.GetElementsByTagName("Mod")[i];
-                cu.SetAttribute("ID", i.ToString());
+                XmlElement cu = (XmlElement)_Xml.GetElementsByTagName("ModModel")[i];
+                cu.SetAttribute("ID", (i+1).ToString());
             }
             _File.Close();
             _Xml.Save(_FilePath);
@@ -139,5 +144,6 @@ namespace XmlDatabase
             xtw.WriteEndElement();
             xtw.Close();
         }
+
     }
 }

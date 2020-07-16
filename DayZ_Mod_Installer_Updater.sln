@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{BAE513FD-3D90-453F-A5A1-8ECB381C1CD3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlDatabase", "XmlDatabase\XmlDatabase.csproj", "{0B189509-A685-430D-BEA1-04C98F62A87F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayZModTool", "DayZModTool\DayZModTool.csproj", "{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BAE513FD-3D90-453F-A5A1-8ECB381C1CD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAE513FD-3D90-453F-A5A1-8ECB381C1CD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAE513FD-3D90-453F-A5A1-8ECB381C1CD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAE513FD-3D90-453F-A5A1-8ECB381C1CD3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B189509-A685-430D-BEA1-04C98F62A87F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B189509-A685-430D-BEA1-04C98F62A87F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B189509-A685-430D-BEA1-04C98F62A87F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B189509-A685-430D-BEA1-04C98F62A87F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
