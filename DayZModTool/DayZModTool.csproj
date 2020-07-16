@@ -4,6 +4,23 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Version>0.0.1</Version>
+    <Authors>winemp83</Authors>
+    <Description>DayZUpdateTool</Description>
+    <Copyright>By WINEMP83</Copyright>
+    <PackageReleaseNotes>TestVersion by Bugs bitte das Mantis benutzen</PackageReleaseNotes>
+    <StartupObject>DayZModTool.App</StartupObject>
+    <ApplicationIcon>DayZ.ico</ApplicationIcon>
+    <AssemblyVersion>0.0.1.1</AssemblyVersion>
+    <FileVersion>0.0.1.1</FileVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DayZ.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="DayZ.ico" />
+  </ItemGroup>
 
 </Project>

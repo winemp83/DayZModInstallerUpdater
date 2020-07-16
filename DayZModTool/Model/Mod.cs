@@ -10,6 +10,8 @@ namespace DayZModTool.Model
         private string _ModID = null;
         private string _ModName = null;
         private bool _IsActive = true;
+        private bool _IsUpdate = false;
+        private bool _IsServerMod = false;
 
         public string ModID
         {
@@ -59,6 +61,36 @@ namespace DayZModTool.Model
                 {
                     _IsActive = GetBoolValue(value);
                     RaisePropertyChanged("IsActive");
+                }
+            }
+        }
+        public string IsUpdate
+        {
+            get
+            {
+                return GetBoolValue(_IsUpdate);
+            }
+            set
+            {
+                if (IsUpdate != value)
+                {
+                    _IsUpdate = GetBoolValue(value);
+                    RaisePropertyChanged("IsUpdate");
+                }
+            }
+        }
+        public string IsServerMod
+        {
+            get
+            {
+                return GetBoolValue(_IsServerMod);
+            }
+            set
+            {
+                if (IsServerMod != value)
+                {
+                    _IsServerMod = GetBoolValue(value);
+                    RaisePropertyChanged("IsServerMod");
                 }
             }
         }

@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:DayZModTool"
         xmlns:views="clr-namespace:DayZModTool.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DayZ Tools by Winemp83" Height="450" Width="800" Icon="/DayZ.ico">
     <Grid>
-        <views:ModView x:Name="ModView"/>
+        <StackPanel Orientation="Horizontal">
+            <views:ModView x:Name="ModView"/>
+        </StackPanel>
     </Grid>
 </Window>

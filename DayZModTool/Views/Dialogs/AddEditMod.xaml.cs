@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DayZModTool.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +18,29 @@ namespace DayZModTool.Views.Dialogs
     /// </summary>
     public partial class AddEditMod : Window
     {
-        public AddEditMod()
+        public AddEditMod(ModModel model = null)
         {
+            if (model == null)
+                model = new ModModel();
+            Mod = model;
             InitializeComponent();
+        }
+        public ModModel Mod
+        {
+            get { return (ModModel)DataContext; }
+            set { DataContext = value; }
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Dialog box canceled
+            DialogResult = false;
+        }
+
+        private void okButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Dialog box accepted
+            DialogResult = true;
         }
     }
 }

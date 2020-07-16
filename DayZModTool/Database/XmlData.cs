@@ -33,6 +33,8 @@ namespace DayZModTool.Database.XmlDatabase
             cl.SetAttribute("ModID", mod.ModID);
             cl.SetAttribute("ModName", mod.ModName);
             cl.SetAttribute("IsActive", mod.IsActive);
+            cl.SetAttribute("IsUpdate", mod.IsUpdate);
+            cl.SetAttribute("IsServerMod", mod.IsServerMod);
             _Xml.DocumentElement.AppendChild(cl);
             _File.Close();
             _Xml.Save(_FilePath);
@@ -53,7 +55,9 @@ namespace DayZModTool.Database.XmlDatabase
                     ID = cl.GetAttribute("ID"),
                     ModID = cl.GetAttribute("ModID"),
                     ModName = cl.GetAttribute("ModName"),
-                    IsActive = cl.GetAttribute("IsActive")
+                    IsActive = cl.GetAttribute("IsActive"),
+                    IsUpdate = cl.GetAttribute("IsUpdate"),
+                    IsServerMod = cl.GetAttribute("IsServerMod")
             };
                 if (ID != null)
                     if (r.ID == ID)
@@ -83,6 +87,8 @@ namespace DayZModTool.Database.XmlDatabase
                     cu.SetAttribute("ModID", mod.ModID);
                     cu.SetAttribute("ModName", mod.ModName);
                     cu.SetAttribute("IsActive", mod.IsActive);
+                    cu.SetAttribute("IsUpdate", mod.IsUpdate);
+                    cu.SetAttribute("IsServerMod", mod.IsServerMod);
                     break;
                 }
             }

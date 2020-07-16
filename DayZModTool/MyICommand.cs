@@ -7,8 +7,8 @@ namespace DayZModTool
 {
     public class MyICommand : ICommand
     {
-        Action _TargetExecuteMethod;
-        Func<bool> _TargetCanExecuteMethod;
+        readonly Action _TargetExecuteMethod;
+        readonly Func<bool> _TargetCanExecuteMethod;
 
         public MyICommand(Action executeMethod)
         {

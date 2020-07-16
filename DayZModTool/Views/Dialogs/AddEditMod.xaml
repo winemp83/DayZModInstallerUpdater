@@ -5,8 +5,82 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DayZModTool.Views.Dialogs"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="Add/Edit Mods"
+        Height="270"
+        Width="300"
+        MinHeight="10"
+        MinWidth="300"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen" 
+        FocusManager.FocusedElement="{Binding ElementName=leftMarginTextBox}" Topmost="True" WindowStyle="ToolWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
     <Grid>
-        
+        <Grid.Resources>
+            <Style TargetType="{x:Type Grid}">
+                <Setter Property="Margin" Value="10" />
+            </Style>
+            <Style TargetType="{x:Type Label}">
+                <Setter Property="Margin" Value="0,3,5,5" />
+                <Setter Property="Padding" Value="0,0,0,5" />
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="0,0,0,5" />
+                <Style.Triggers>
+                    <Trigger Property="Validation.HasError" Value="true">
+                        <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="{x:Type StackPanel}">
+                <Setter Property="Orientation" Value="Horizontal" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Width" Value="70" />
+                <Setter Property="Height" Value="25" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+            </Style>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!-- ID -->
+                    <Label Grid.Column="0" Grid.Row="0">ID:</Label>
+                    <TextBlock Name="IDTextblock" Grid.Column="1" Grid.Row="0" Text="{Binding Path=ID}"/>
+
+                    <!-- ModID -->
+                    <Label Grid.Column="0" Grid.Row="1">Mod ID:</Label>
+                    <TextBox Name="ModIDTextBox" Grid.Column="1" Grid.Row="1" Text="{Binding Path=ModID}"/>
+
+
+                    <!-- ModName -->
+                    <Label Grid.Column="0" Grid.Row="2">ModName:</Label>
+                    <TextBox Name="ModNameTextBox" Grid.Column="1" Grid.Row="2" Text="{Binding Path=ModName}"/>
+
+
+                    <!--Is Active-->
+                    <Label Grid.Column="0" Grid.Row="3">Ist Aktiv</Label>
+                    <CheckBox IsChecked="{Binding Path=IsActive}" Grid.Row="3" Grid.Column="1"/>
+                    <!--Is Update-->
+                    <Label Grid.Column="0" Grid.Row="4">Update/Install</Label>
+                    <CheckBox IsChecked="{Binding Path=IsUpdate}" Grid.Row="4" Grid.Column="1"/>
+                    <!--Is ServerMod-->
+                    <Label Grid.Column="0" Grid.Row="5">Server Mod</Label>
+                    <CheckBox IsChecked="{Binding Path=IsServerMod}" Grid.Row="5" Grid.Column="1"/>
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6">
+                    <Button Name="okButton" Click="okButton_Click" IsDefault="True">OK</Button>
+                    <Button Name="cancelButton" IsCancel="True">Cancel</Button>
+                </StackPanel>
     </Grid>
 </Window>
