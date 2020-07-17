@@ -22,6 +22,9 @@ namespace Database
             _FilePath = _Configs.GetValue("XmlDB");
             if (!File.Exists(_FilePath))
                 Create();
+#if DEBUG
+            EventLog.WriteEventLog(EventTyp.Debug, "Hier hätte ihre Werbung stehen können!");
+#endif
         }
 
         #region Public Methods

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Diagnostics;
 
 namespace Logging
 {
@@ -8,7 +9,7 @@ namespace Logging
         Error,
         Warning,
         Information,
-        DEbug,
+        Debug,
         Null
     }
     public static class EventLog
@@ -16,6 +17,9 @@ namespace Logging
         private static readonly string _FileName = $@"C:\steam\log.log";
         public static void WriteEventLog(EventTyp typ, string msg)
         {
+#if DEBUG
+            Debug.WriteLine(CreateLogEntry(typ, msg));
+#else
             try
             {
                 using FileStream aFile = new FileStream(_FileName, FileMode.Append, FileAccess.Write);
@@ -26,6 +30,7 @@ namespace Logging
             {
 
             }
+#endif
         }
 
         private static string CreateLogEntry(EventTyp typ, string msg)
