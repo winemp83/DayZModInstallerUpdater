@@ -57,8 +57,7 @@ namespace DayZModTool.Database.XmlDatabase
                     ModName = cl.GetAttribute("ModName"),
                     IsActive = cl.GetAttribute("IsActive"),
                     IsUpdate = cl.GetAttribute("IsUpdate"),
-                    IsServerMod = cl.GetAttribute("IsServerMod")
-            };
+                    IsServerMod = cl.GetAttribute("IsServerMod")};
                 if (ID != null)
                     if (r.ID == ID)
                     {
