@@ -19,10 +19,7 @@ namespace XmlIni
             }
             set
             {
-                if(Key != value) {
-                    _Key = value;
-                    RaisePropertyChanged("Key");
-                }
+                SetProperty(ref _Key, value);
             }
         }
         public string Value
@@ -38,11 +35,7 @@ namespace XmlIni
             }
             set
             {
-                if (Value != value)
-                {
-                    _Value = value;
-                    RaisePropertyChanged("Value");
-                }
+                SetProperty(ref _Value, value);
             }
         }
     }

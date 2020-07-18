@@ -2,7 +2,7 @@
 
 namespace XmlIni
 {
-    public class Config
+    public class Config : BindableBase.BindableBase
     {
         private readonly IniDB _DB;
         public BindingList<IniModel> Configs
@@ -57,6 +57,36 @@ namespace XmlIni
 
         private void LoadConfig()
         {
+            if (_DB.Get().Count <= 0)
+            {
+                Add("SteamUser");
+                Add("SteamPass");
+                Add("SteamPfad");
+
+                Add("DayZPfad");
+
+                Add("DBPfad");
+                Add("DBName");
+
+                Add("ServerConfigLaufzeit");
+                Add("ServerConfigStartBatchName");
+                Add("ServerConfigConsoleTitel");
+                Add("ServerConfigProfilName");
+                Add("ServerConfigPort");
+                Add("ServerConfigName");
+                Add("ServerConfigCpu");
+                Add("ServerConfigdoLogs");
+                Add("ServerConfigadmLog");
+                Add("ServerConfignetLog");
+                Add("ServerConfigfreezecheck");
+
+                Add("ServerBackupPfad");
+                Add("ServerBackupLogName");
+                Add("ServerBackupLogPfad");
+                Add("ServerBackupProfilPfad");
+
+                Add("ServerClean");
+            }
             Reload();
             Configs.ListChanged += new ListChangedEventHandler(Config_Changed);
         }

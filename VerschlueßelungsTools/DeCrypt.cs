@@ -8,7 +8,8 @@ namespace VerschlueßelungsTools
 {
     public class DeCrypt
     {
-        private readonly string _SecretKey = "!HashP2020";
+        private const int keysize = 256;
+        private readonly string _SecretKey = "!HashP2020MKFidb";
         private string _PublicKey;
         private string _Text;
         private string _Result;
@@ -53,21 +54,22 @@ namespace VerschlueßelungsTools
         {
             try
             {
-                byte[] privatekeyByte = { };
-                privatekeyByte = System.Text.Encoding.UTF8.GetBytes(_SecretKey);
-                byte[] publickeybyte = { };
-                publickeybyte = System.Text.Encoding.UTF8.GetBytes(PublicKey);
-                MemoryStream ms = null;
-                CryptoStream cs = null;
-                byte[] inputbyteArray = new byte[Text.Replace(" ", "+").Length];
-                inputbyteArray = Convert.FromBase64String(Text.Replace(" ", "+"));
-                using DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-                ms = new MemoryStream();
-                cs = new CryptoStream(ms, des.CreateDecryptor(publickeybyte, privatekeyByte), CryptoStreamMode.Write);
-                cs.Write(inputbyteArray, 0, inputbyteArray.Length);
-                cs.FlushFinalBlock();
-                Encoding encoding = Encoding.UTF8;
-                Result = encoding.GetString(ms.ToArray());
+                byte[] initVectorBytes = Encoding.UTF8.GetBytes(_SecretKey);
+                byte[] cipherTextBytes = Convert.FromBase64String(Text);
+                PasswordDeriveBytes password = new PasswordDeriveBytes(PublicKey, null);
+                byte[] keyBytes = password.GetBytes(keysize / 8);
+                RijndaelManaged symmetricKey = new RijndaelManaged
+                {
+                    Mode = CipherMode.CBC
+                };
+                ICryptoTransform decryptor = symmetricKey.CreateDecryptor(keyBytes, initVectorBytes);
+                MemoryStream memoryStream = new MemoryStream(cipherTextBytes);
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);
+                byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+                int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                memoryStream.Close();
+                cryptoStream.Close();
+                Result = Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
 
             }
             catch (Exception ex)

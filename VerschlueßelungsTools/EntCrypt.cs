@@ -2,12 +2,14 @@
 using System;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace VerschlueßelungsTools
 {
     public class EntCrypt
     {
-        private readonly string _SecretKey = "!HashP2020";
+        private const int keysize = 256;
+        private readonly string _SecretKey = "!HashP2020MKFidb";
         private string _PublicKey = "";
         private string _Text;
         private string _Result;
@@ -51,19 +53,23 @@ namespace VerschlueßelungsTools
         {
             try
             {
-                byte[] secretkeyByte = { };
-                secretkeyByte = System.Text.Encoding.UTF8.GetBytes(_SecretKey);
-                byte[] publickeybyte = { };
-                publickeybyte = System.Text.Encoding.UTF8.GetBytes(_PublicKey);
-                MemoryStream ms = null;
-                CryptoStream cs = null;
-                byte[] inputbyteArray = System.Text.Encoding.UTF8.GetBytes(Text);
-                using DESCryptoServiceProvider des = new DESCryptoServiceProvider();
-                ms = new MemoryStream();
-                cs = new CryptoStream(ms, des.CreateEncryptor(publickeybyte, secretkeyByte), CryptoStreamMode.Write);
-                cs.Write(inputbyteArray, 0, inputbyteArray.Length);
-                cs.FlushFinalBlock();
-                Result = Convert.ToBase64String(ms.ToArray());
+                byte[] initVectorBytes = Encoding.UTF8.GetBytes(_SecretKey);
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(Text);
+                PasswordDeriveBytes password = new PasswordDeriveBytes(PublicKey, null);
+                byte[] keyBytes = password.GetBytes(keysize / 8);
+                RijndaelManaged symmetricKey = new RijndaelManaged
+                {
+                    Mode = CipherMode.CBC
+                };
+                ICryptoTransform encryptor = symmetricKey.CreateEncryptor(keyBytes, initVectorBytes);
+                MemoryStream memoryStream = new MemoryStream();
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write);
+                cryptoStream.Write(plainTextBytes, 0, plainTextBytes.Length);
+                cryptoStream.FlushFinalBlock();
+                byte[] cipherTextBytes = memoryStream.ToArray();
+                memoryStream.Close();
+                cryptoStream.Close();
+                Result = Convert.ToBase64String(cipherTextBytes);
 
             }
             catch (Exception ex)

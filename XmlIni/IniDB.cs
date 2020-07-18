@@ -23,6 +23,7 @@ namespace XmlIni
         }
 
         public void Insert(IniModel value) {
+            EventLog.WriteEventLog(EventTyp.Information,$@"Ich soll hier was Eintragen : {value.Key}::{value.Value}");
             try
             {
                 _Xml = new XmlDocument();
@@ -31,8 +32,10 @@ namespace XmlIni
                 XmlElement cl = _Xml.CreateElement("Section");
                 cl.SetAttribute("Key", value.Key);
                 cl.SetAttribute("Value", _Crypt.Entcrypt(value.Value));
+                _Xml.DocumentElement.AppendChild(cl);
                 _File.Close();
                 _Xml.Save(_FilePath);
+                EventLog.WriteEventLog(EventTyp.Information, $@"Das habe ich Eintragen : {value.Key}::{_Crypt.Entcrypt(value.Value)}");
             }
             catch(Exception ex)
             {
@@ -99,7 +102,7 @@ namespace XmlIni
                 for (int i = 0; i < list.Count; i++)
                 {
                     XmlElement cl = (XmlElement)_Xml.GetElementsByTagName("Section")[i];
-                    if (key != null || key.Length <= 0)
+                    if (key != null && key.Length <= 0)
                     {
                         if (cl.GetAttribute("Key").Equals(key))
                         {

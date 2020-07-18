@@ -5,13 +5,7 @@ using System.Text;
 
 namespace XmlIni
 {
-    public class BaseModel : INotifyPropertyChanged
+    public class BaseModel : BindableBase.ValidatableBindableBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void RaisePropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
     }
 }
