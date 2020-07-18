@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logging\Logging.csproj" />
-    <ProjectReference Include="..\VerschlueßelungsTools\VerschlueßelungsTools.csproj" />
   </ItemGroup>
 
 </Project>

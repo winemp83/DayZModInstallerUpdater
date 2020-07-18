@@ -1,11 +1,10 @@
 ﻿using Logging;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
 using System.IO;
 using System.Text;
 using System.Xml;
+using VerschlueßelungsTools;
 
 namespace XmlIni
 {
@@ -14,8 +13,10 @@ namespace XmlIni
         private XmlDocument _Xml;
         private FileStream _File;
         private readonly string _FilePath;
+        private readonly Crypt _Crypt;
 
         public IniDB(string filename) {
+            _Crypt = new Crypt();
             _FilePath = filename;
             if (!File.Exists(_FilePath))
                 Create();
@@ -29,7 +30,7 @@ namespace XmlIni
                 _Xml.Load(_File);
                 XmlElement cl = _Xml.CreateElement("Section");
                 cl.SetAttribute("Key", value.Key);
-                cl.SetAttribute("Value", value.Value);
+                cl.SetAttribute("Value", _Crypt.Entcrypt(value.Value));
                 _File.Close();
                 _Xml.Save(_FilePath);
             }
@@ -51,7 +52,7 @@ namespace XmlIni
                     XmlElement cu = (XmlElement)_Xml.GetElementsByTagName("Section")[i];
                     if (cu.GetAttribute("Key") == value.Key)
                     {
-                        cu.SetAttribute("Value", value.Value);
+                        cu.SetAttribute("Value", _Crypt.Entcrypt(value.Value));
                         break;
                     }
                 }
@@ -102,12 +103,12 @@ namespace XmlIni
                     {
                         if (cl.GetAttribute("Key").Equals(key))
                         {
-                            result.Add(new IniModel() { Key = cl.GetAttribute("Key"), Value = cl.GetAttribute("Value") });
+                            result.Add(new IniModel() { Key = cl.GetAttribute("Key"), Value = _Crypt.Decrypt(cl.GetAttribute("Value")) });
                             break;
                         }
                     }
                     else {
-                        result.Add(new IniModel() { Key = cl.GetAttribute("Key"), Value = cl.GetAttribute("Value") });
+                        result.Add(new IniModel() { Key = cl.GetAttribute("Key"), Value = _Crypt.Decrypt(cl.GetAttribute("Value")) });
                     }
                 }
                 _File.Close();

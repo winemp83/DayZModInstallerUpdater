@@ -24,11 +24,18 @@ namespace XmlIni
         }
         public void Edit(string key, string newValue = "NotSet")
         {
+            IniModel _tmp = null;
             foreach(IniModel i in Configs) {
                 if (i.Key.Equals(key))
+                {
+                    _tmp = new IniModel();
                     i.Value = newValue;
+                    _tmp = i;
+                    break;
+                }
             }
-            _DB.Update(new IniModel() { Key = key, Value = newValue });
+            if(_tmp != null)
+                _DB.Update(_tmp);
             Reload();
         }
         public void Del(string key)
@@ -41,7 +48,9 @@ namespace XmlIni
             string result = "";
             foreach(IniModel i in Configs) {
                 if (i.Key.Equals(key))
+                {
                     result = i.Value;
+                }
             }
             return result;
         }
