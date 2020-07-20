@@ -3,23 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayZModTool", "DayZModTool\DayZModTool.csproj", "{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlIni", "XmlIni\XmlIni.csproj", "{56D8FDBC-D6D8-4C36-B22B-AE59B514820C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "Logging\Logging.csproj", "{FF161B6A-63AF-41D2-AF00-ECDF93F1D0E8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Database", "Database\Database.csproj", "{861D3D35-1FE9-4301-906D-BE9B19F3F57B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{A91120D5-B0E3-468D-A40F-179F39DA2294}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Model\Models.csproj", "{A91120D5-B0E3-468D-A40F-179F39DA2294}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{9D83B02B-51D8-4550-B387-D000290391EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerschlueßelungsTools", "VerschlueßelungsTools\VerschlueßelungsTools.csproj", "{BEDC4C01-D936-48FF-9387-D8F7DDDE264D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BindableBase", "BindableBase\BindableBase.csproj", "{F4AAA499-E581-42D7-B557-DA58169C6EEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BindableBase", "BindableBase\BindableBase.csproj", "{F4AAA499-E581-42D7-B557-DA58169C6EEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyICommand", "MyICommand\MyICommand.csproj", "{C9AEA67F-A6A2-4865-A27A-E8CE7BD6E12A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyICommand", "MyICommand\MyICommand.csproj", "{C9AEA67F-A6A2-4865-A27A-E8CE7BD6E12A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\ViewModel.csproj", "{93A4082E-5EFA-460A-B046-57FC6DC67851}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DayZServerVerwaltung", "DayZServerVerwaltung\DayZServerVerwaltung.csproj", "{DDB7FA3B-B08D-4EEE-8AA4-CA0CC37EF6E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C2E34A6-3EE1-4237-A259-FB8F1D5C3360}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56D8FDBC-D6D8-4C36-B22B-AE59B514820C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{56D8FDBC-D6D8-4C36-B22B-AE59B514820C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56D8FDBC-D6D8-4C36-B22B-AE59B514820C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +61,14 @@ Global
 		{C9AEA67F-A6A2-4865-A27A-E8CE7BD6E12A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9AEA67F-A6A2-4865-A27A-E8CE7BD6E12A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9AEA67F-A6A2-4865-A27A-E8CE7BD6E12A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93A4082E-5EFA-460A-B046-57FC6DC67851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93A4082E-5EFA-460A-B046-57FC6DC67851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93A4082E-5EFA-460A-B046-57FC6DC67851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93A4082E-5EFA-460A-B046-57FC6DC67851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB7FA3B-B08D-4EEE-8AA4-CA0CC37EF6E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB7FA3B-B08D-4EEE-8AA4-CA0CC37EF6E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB7FA3B-B08D-4EEE-8AA4-CA0CC37EF6E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB7FA3B-B08D-4EEE-8AA4-CA0CC37EF6E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

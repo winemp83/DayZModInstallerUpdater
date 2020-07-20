@@ -3,61 +3,41 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using Models;
 
 namespace VerschlueßelungsTools
 {
     public class DeCrypt
     {
-        private const int keysize = 256;
-        private readonly string _SecretKey = "!HashP2020MKFidb";
-        private string _PublicKey;
-        private string _Text;
-        private string _Result;
+        private readonly Models.Crypt _Cyper;
 
-        protected string PublicKey
+        public string Set
         {
-            get { return _PublicKey; }
-            set { _PublicKey = value; }
-        }
-        public string Text
-        {
-            get { return _Text; }
-            set
-            {
-                _Text = value;
-            }
+            set { _Cyper.Value = value; }
         }
         public string Result
         {
-            get
-            {
-                if (Text != null)
-                {
-                    Decrypt();
-                    return _Result;
-                }
-                else
-                    throw new Exception("Ohne Text kein Entschlüßeln");
-            }
-            private set
-            {
-                _Result = value;
-            }
+            get { return _Cyper.Result; }
         }
-
-        public DeCrypt(string publickey = "Helena2014!")
+        
+        public DeCrypt(string Value = null)
         {
-            PublicKey = publickey;
+            _Cyper = new Models.Crypt();
+            if (Value != null || Value.Length > 0)
+            {
+                _Cyper.Value = Value;
+                Decrypt();
+            }
         }
 
         private void Decrypt()
         {
             try
             {
-                byte[] initVectorBytes = Encoding.UTF8.GetBytes(_SecretKey);
-                byte[] cipherTextBytes = Convert.FromBase64String(Text);
-                PasswordDeriveBytes password = new PasswordDeriveBytes(PublicKey, null);
-                byte[] keyBytes = password.GetBytes(keysize / 8);
+                byte[] initVectorBytes = Encoding.UTF8.GetBytes(_Cyper.Secret);
+                byte[] cipherTextBytes = Convert.FromBase64String(_Cyper.Value);
+                PasswordDeriveBytes password = new PasswordDeriveBytes(_Cyper.Password, null);
+                byte[] keyBytes = password.GetBytes(_Cyper.Keysize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged
                 {
                     Mode = CipherMode.CBC
@@ -69,7 +49,7 @@ namespace VerschlueßelungsTools
                 int decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
                 memoryStream.Close();
                 cryptoStream.Close();
-                Result = Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+                _Cyper.Result = Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
 
             }
             catch (Exception ex)

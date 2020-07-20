@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Logging\Logging.csproj" />
-    <ProjectReference Include="..\Model\Model.csproj" />
-    <ProjectReference Include="..\XmlIni\XmlIni.csproj" />
+    <ProjectReference Include="..\Model\Models.csproj" />
+    <ProjectReference Include="..\VerschlueßelungsTools\VerschlueßelungsTools.csproj" />
   </ItemGroup>
 
 </Project>

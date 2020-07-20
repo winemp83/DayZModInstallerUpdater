@@ -1,5 +1,5 @@
 ﻿using Database;
-using Model;
+using Models;
 using XmlIni;
 using System;
 using System.Collections.Generic;
@@ -11,27 +11,28 @@ namespace Services
 {
     public class MakeBatch
     {
-        private readonly XmlDataBase _DB = new XmlDataBase();
+        private readonly ModDB _DB;
         private readonly Config _Config;
 
         public MakeBatch()
         {
             _Config = new Config();
+            _DB = new ModDB(ref _Config.Configs);
         }
         #region Private Methods
-        private string MakeRemoveDirString(ModModel value)
+        private string MakeRemoveDirString(Mod value)
         {
             return $@"rmdir /Q /S {_Config.GetValue("DayZPfad")}\@{value.ModName}";
         }
-        private string MakeSteamUpdateString(ModModel value)
+        private string MakeSteamUpdateString(Mod value)
         {
             return "%steamcmdpath%\\steamcmd +login %login% %pass% +\"workshop_download_item 221100 " + value.ModID + "\" +quit";
         }
-        private string MakeCopyString(ModModel value)
+        private string MakeCopyString(Mod value)
         {
             return "copy \"" + _Config.GetValue("DayZPfad") + $@"\@" + value.ModName + "\\Keys\\*.bikey\" \"" + _Config.GetValue("DayZPfad") + "\\keys\\\"";
         }
-        private string MakeMoveString(ModModel value)
+        private string MakeMoveString(Mod value)
         {
             return "move \"" + _Config.GetValue("SteamPfad") + "\\steamapps\\workshop\\content\\221100\\" + value.ModID + "\" \"" + $@"{ _Config.GetValue("DayZPfad")}\@{ value.ModName}" + "\"";
         }
@@ -58,7 +59,7 @@ namespace Services
                 sw.WriteLine("echo.");
                 sw.WriteLine($@"rmdir /Q /S {_Config.GetValue("SteamPfad")}" + "\\steamapps\\workshop\\content\\221100");
                 sw.WriteLine("echo.");
-                foreach (ModModel m in _DB.Get())
+                foreach (Mod m in _DB.Get())
                 {
                     if (m.IsUpdate == "true")
                     {
@@ -126,7 +127,7 @@ namespace Services
                     File.Delete(fileName);
                 }
 
-                foreach (ModModel m in _DB.Get())
+                foreach (Mod m in _DB.Get())
                 {
                     if (m.IsActive.Equals("true") && m.IsServerMod.Equals("true"))
                     {

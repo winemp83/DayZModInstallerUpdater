@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BindableBase\BindableBase.csproj" />
+    <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
+    <ProjectReference Include="..\Model\Models.csproj" />
     <ProjectReference Include="..\VerschlueßelungsTools\VerschlueßelungsTools.csproj" />
   </ItemGroup>
 

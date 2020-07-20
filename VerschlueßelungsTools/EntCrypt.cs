@@ -8,55 +8,34 @@ namespace VerschlueßelungsTools
 {
     public class EntCrypt
     {
-        private const int keysize = 256;
-        private readonly string _SecretKey = "!HashP2020MKFidb";
-        private string _PublicKey = "";
-        private string _Text;
-        private string _Result;
+        private readonly Models.Crypt _Cyper;
 
-        protected string PublicKey
+        public string Set
         {
-            get { return _PublicKey; }
-            set { _PublicKey = value; }
-        }
-        public string Text
-        {
-            get { return _Text; }
-            set
-            {
-                _Text = value;
-            }
+            set { _Cyper.Value = value; }
         }
         public string Result
         {
-            get
-            {
-                if (Text != null)
-                {
-                    Encrypt();
-                    return _Result;
-                }
-                else
-                    throw new Exception("Ohne Text kein Verschlüßeln");
-            }
-            private set
-            {
-                _Result = value;
-            }
+            get { return _Cyper.Result; }
         }
 
-        public EntCrypt (string publickey = "Helena2014!")
+        public EntCrypt(string Value = null)
         {
-            PublicKey = publickey;
+            _Cyper = new Models.Crypt();
+            if (Value != null || Value.Length > 0)
+            {
+                _Cyper.Value = Value;
+                Encrypt();
+            }
         }
         private void Encrypt()
         {
             try
             {
-                byte[] initVectorBytes = Encoding.UTF8.GetBytes(_SecretKey);
-                byte[] plainTextBytes = Encoding.UTF8.GetBytes(Text);
-                PasswordDeriveBytes password = new PasswordDeriveBytes(PublicKey, null);
-                byte[] keyBytes = password.GetBytes(keysize / 8);
+                byte[] initVectorBytes = Encoding.UTF8.GetBytes(_Cyper.Secret);
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(_Cyper.Value);
+                PasswordDeriveBytes password = new PasswordDeriveBytes(_Cyper.Password, null);
+                byte[] keyBytes = password.GetBytes(_Cyper.Keysize / 8);
                 RijndaelManaged symmetricKey = new RijndaelManaged
                 {
                     Mode = CipherMode.CBC
@@ -69,7 +48,7 @@ namespace VerschlueßelungsTools
                 byte[] cipherTextBytes = memoryStream.ToArray();
                 memoryStream.Close();
                 cryptoStream.Close();
-                Result = Convert.ToBase64String(cipherTextBytes);
+                _Cyper.Result = Convert.ToBase64String(cipherTextBytes);
 
             }
             catch (Exception ex)

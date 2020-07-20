@@ -1,28 +1,23 @@
-﻿namespace Model
+﻿namespace Models
 {
-    public class ModModel : BaseModel
+    public class Mod : BaseModel
     {
         private string _ModID = null;
         private string _ModName = null;
         private bool _IsActive = true;
         private bool _IsUpdate = false;
         private bool _IsServerMod = false;
+        private string _Order;
 
         public string ModID
         {
             get
             {
-                if (_ModID == null)
-                    return "0000000000";
-                return _ModID;
+                return NullCheck(ref _ModID, "00000000");
             }
             set
             {
-                if (ModID != value)
-                {
-                    _ModID = value;
-                    RaisePropertyChanged("ModID");
-                }
+                SetProperty(ref _ModID, value);
             }
         }
 
@@ -30,18 +25,18 @@
         {
             get
             {
-                if (_ModName == null)
-                    return "NewMod";
-                return _ModName;
+                return NullCheck(ref _ModName,"New_Mod");
             }
             set
             {
-                if (ModName != value)
-                {
-                    _ModName = value;
-                    RaisePropertyChanged("ModName");
-                }
+                SetProperty(ref _ModName, value);
             }
+        }
+
+        public string Order
+        {
+            get { return NullCheck(ref _Order, "0"); }
+            set { SetProperty(ref _Order, value); }
         }
 
         public string IsActive
@@ -52,11 +47,7 @@
             }
             set
             {
-                if(IsActive != value)
-                {
-                    _IsActive = GetBoolValue(value);
-                    RaisePropertyChanged("IsActive");
-                }
+                SetProperty(ref _IsActive, GetBoolValue(value));
             }
         }
         public string IsUpdate
@@ -67,11 +58,7 @@
             }
             set
             {
-                if (IsUpdate != value)
-                {
-                    _IsUpdate = GetBoolValue(value);
-                    RaisePropertyChanged("IsUpdate");
-                }
+                SetProperty(ref _IsUpdate, GetBoolValue(value));
             }
         }
         public string IsServerMod
@@ -82,34 +69,25 @@
             }
             set
             {
-                if (IsServerMod != value)
-                {
-                    _IsServerMod = GetBoolValue(value);
-                    RaisePropertyChanged("IsServerMod");
-                }
+                SetProperty(ref _IsServerMod, GetBoolValue(value));
             }
         }
 
-        public ModModel(string id = null, string modID = null, string modName = null)
+        public Mod(string id = null, string modID = null, string modName = null, string order = null)
         {
-            if (id != null)
-                base.ID = id;
-            if (modID != null)
-                ModID = modID;
-            if (modName != null)
-                ModName = modName;
+            base.ID = NullCheck(ref id, "0");
+            ModID = NullCheck(ref modID, "00000000");
+            ModName = NullCheck(ref modName, "Mod Name");
+            Order = NullCheck(ref order, base.ID);
         }
 
         public static string GetBoolValue(bool value)
         {
-            string result =  value.ToString().ToLowerInvariant();
-            return result;
+            return value.ToString().ToLowerInvariant();
         }
 
         public static bool GetBoolValue(string value) {
-            if (value.ToLowerInvariant().Equals("true"))
-                return true;
-            return false;
+            return value.ToLowerInvariant().Equals("true");
         }
 
     }

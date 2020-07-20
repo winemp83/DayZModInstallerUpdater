@@ -1,34 +1,32 @@
-﻿using System.ComponentModel;
+﻿using Database;
+using Models;
+using System.ComponentModel;
 
 namespace XmlIni
 {
     public class Config : BindableBase.BindableBase
     {
         private readonly IniDB _DB;
-        public BindingList<IniModel> Configs
-        {
-            get;
-            set;
-        }
+        public BindingList<Ini> Configs = new BindingList<Ini>();
 
         public Config()
         {
             _DB = new IniDB($@"C:\steam\ini.sak");
-            Configs = new BindingList<IniModel>();
+            Configs = new BindingList<Ini>();
             LoadConfig();
         }
         public void Add(string key, string value = "NotSet") {
-            IniModel n = new IniModel() { Key = key, Value = value };
+            Ini n = new Ini() { Key = key, Value = value };
             _DB.Insert(n);
             Reload();
         }
         public void Edit(string key, string newValue = "NotSet")
         {
-            IniModel _tmp = null;
-            foreach(IniModel i in Configs) {
+            Ini _tmp = null;
+            foreach(Ini i in Configs) {
                 if (i.Key.Equals(key))
                 {
-                    _tmp = new IniModel();
+                    _tmp = new Ini();
                     i.Value = newValue;
                     _tmp = i;
                     break;
@@ -40,13 +38,13 @@ namespace XmlIni
         }
         public void Del(string key)
         {
-            _DB.Delete(new IniModel() { Key = key });
+            _DB.Delete(new Ini() { Key = key });
             Reload();
         }
         public string GetValue(string key)
         {
             string result = "";
-            foreach(IniModel i in Configs) {
+            foreach(Ini i in Configs) {
                 if (i.Key.Equals(key))
                 {
                     result = i.Value;
@@ -99,7 +97,7 @@ namespace XmlIni
         public void Reload()
         {
             Configs.Clear();
-            foreach (IniModel i in _DB.Get())
+            foreach (Ini i in _DB.Get())
                 Configs.Add(i);
         }
     }

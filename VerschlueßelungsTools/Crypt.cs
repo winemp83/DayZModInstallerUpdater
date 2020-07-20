@@ -9,17 +9,17 @@
           * @param {string} PublicKey.
           * @return {void}
           */
-        public Crypt(string key = null)
+        public Crypt(string Value = null)
         {
-            if (key == null)
+            if (Value == null)
             {
                 _DeCrypt = new DeCrypt();
                 _EntCrypt = new EntCrypt();
             }
             else
             {
-                _DeCrypt = new DeCrypt(key);
-                _EntCrypt = new EntCrypt(key);
+                _DeCrypt = new DeCrypt(Value);
+                _EntCrypt = new EntCrypt(Value);
             }
         }
 
@@ -29,7 +29,10 @@
           */
         public string Entcrypt(string text)
         {
-            _EntCrypt.Text = text;
+            _EntCrypt.Set = text;
+            return _EntCrypt.Result;
+        }
+        public string Entcrypt() {
             return _EntCrypt.Result;
         }
 
@@ -39,7 +42,11 @@
           */
         public string Decrypt(string text)
         {
-            _DeCrypt.Text = text;
+            _DeCrypt.Set = text;
+            return _DeCrypt.Result;
+        }
+        public string Decrypt()
+        {
             return _DeCrypt.Result;
         }
     }

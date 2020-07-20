@@ -1,64 +1,23 @@
-﻿using System;
+﻿using BindableBase;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Model
+namespace Models
 {
-    public class BaseModel : INotifyPropertyChanged, IEquatable<BaseModel>
+    public class BaseModel : ValidatableBindableBase
     {
-        private string _ID = null;
+        private string _ID;
+
         public string ID
         {
-            get
-            {
-                if (_ID == null)
-                    return "-1";
-                return _ID;
-            }
-            set
-            {
-                if (ID != value)
-                {
-                    _ID = value;
-                    RaisePropertyChanged("ID");
-                }
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as BaseModel);
+            get { return (_ID); }
+            set { SetProperty(ref _ID, value); }
         }
 
-        public bool Equals(BaseModel other)
-        {
-            return other != null &&
-                   _ID == other._ID &&
-                   ID == other.ID;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(_ID, ID);
-        }
-
-        protected void RaisePropertyChanged(string property)
-        {
-            Debug.WriteLine(property);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-            
-        }
-
-        public static bool operator ==(BaseModel left, BaseModel right)
-        {
-            return EqualityComparer<BaseModel>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(BaseModel left, BaseModel right)
-        {
-            return !(left == right);
+        public string NullCheck(ref string Value, string msg) {
+            return (Value != null || Value.Length >= 0) ? Value: msg;
         }
     }
 }
