@@ -5,6 +5,8 @@ using System.Diagnostics;
 using Logging;
 using XmlIni;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace Services
 {
@@ -147,6 +149,51 @@ namespace Services
             {
                 EventLog.WriteEventLog(EventTyp.Error, ex.Message);
             }
+        }
+        public string GetServerInfo()
+        {
+            string result = null;
+            try
+            {
+                Process[] runingProcess = Process.GetProcesses();
+                for (int i = 0; i < runingProcess.Length; i++)
+                {
+                    if (runingProcess[i].ProcessName.Equals(_Config.GetValue("ServerConfigExe")) || runingProcess[i].MainWindowTitle.Contains(_Config.GetValue("ServerConfigConsoleName")))
+                    {
+                        DateTime _tmp = DateTime.Now;
+                        DateTime _Process = runingProcess[i].StartTime;
+                        result = $@"Server running : {(_tmp - _Process).Hours}:{((_tmp - _Process).Minutes)}:{((_tmp - _Process).Seconds)}";
+                        break;
+                    }
+
+                }
+            }catch(Exception ex)
+            {
+                EventLog.WriteEventLog(EventTyp.Error, ex.Message);
+            }
+            return result ?? "Server not running";
+        }
+        public bool GetServerRunning()
+        {
+            bool result = false;
+            try
+            {
+                Process[] runingProcess = Process.GetProcesses();
+                for (int i = 0; i < runingProcess.Length; i++)
+                {
+                    if (runingProcess[i].ProcessName.Equals(_Config.GetValue("ServerConfigExe")) || runingProcess[i].MainWindowTitle.Contains(_Config.GetValue("ServerConfigConsoleName")))
+                    {
+                        result = true; 
+                        break;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                EventLog.WriteEventLog(EventTyp.Error, ex.Message);
+            }
+            return result;
         }
         #endregion
         #region Private Methods

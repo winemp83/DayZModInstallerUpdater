@@ -77,6 +77,7 @@ namespace XmlIni
                 Add("ServerConfigadmLog");
                 Add("ServerConfignetLog");
                 Add("ServerConfigfreezecheck");
+                Add("ServerConfigExe");
 
                 Add("ServerBackupPfad");
                 Add("ServerBackupLogName");

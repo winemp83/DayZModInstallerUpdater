@@ -8,6 +8,7 @@
     <ProjectReference Include="..\BindableBase\BindableBase.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
     <ProjectReference Include="..\MyICommand\MyICommand.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 
 </Project>

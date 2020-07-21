@@ -7,6 +7,32 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock>Hier werden die Server Aktionen angezeigt</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "Auto" />
+            <RowDefinition Height = "*" />
+        </Grid.RowDefinitions>
+
+        <Grid x:Name = "NavBar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "*" />
+                <ColumnDefinition Width = "*" />
+            </Grid.ColumnDefinitions>
+
+            <Button Content = "Start Server" 
+            Command = "{Binding StartCommand}"
+            Grid.Column = "0" />
+            <Button Content = "Update Server" 
+            Command = "{Binding UpdateCommand}"
+            Grid.Column = "1" />
+            <Button Content = "Stop Server" 
+            Command = "{Binding StopCommand}"
+            Grid.Column = "2" />
+        </Grid>
+
+        <Grid x:Name = "MainContent" Grid.Row = "1">
+            <ContentControl Content = "{Binding Path=Text}" />
+        </Grid>
+
     </Grid>
 </UserControl>
