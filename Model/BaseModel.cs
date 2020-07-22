@@ -17,7 +17,7 @@ namespace Models
         }
 
         public string NullCheck(ref string Value, string msg) {
-            return (Value != null || Value.Length >= 0) ? Value: msg;
+            return (Value != null && Value.Length >= 0) ? Value: msg;
         }
     }
 }

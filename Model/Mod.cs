@@ -47,7 +47,7 @@
             }
             set
             {
-                SetProperty(ref _IsActive, GetBoolValue(value));
+                SetProperty<bool>(ref _IsActive, GetBoolValue(value));
             }
         }
         public string IsUpdate
@@ -58,7 +58,7 @@
             }
             set
             {
-                SetProperty(ref _IsUpdate, GetBoolValue(value));
+                SetProperty<bool>(ref _IsUpdate, GetBoolValue(value));
             }
         }
         public string IsServerMod
@@ -69,7 +69,7 @@
             }
             set
             {
-                SetProperty(ref _IsServerMod, GetBoolValue(value));
+                SetProperty<bool>(ref _IsServerMod, GetBoolValue(value));
             }
         }
 

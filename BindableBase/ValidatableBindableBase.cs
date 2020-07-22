@@ -37,7 +37,7 @@ namespace BindableBase
         {
 
             base.SetProperty<T>(ref member, val, propertyName);
-            ValidateProperty(propertyName, val);
+            ValidateProperty<T>(propertyName, val);
         }
 
         private void ValidateProperty<T>(string propertyName, T value)
@@ -48,7 +48,7 @@ namespace BindableBase
             {
                 MemberName = propertyName
             };
-            Validator.TryValidateProperty(value, context, results);
+            Validator.TryValidateProperty(value.ToString(), context, results);
 
             if (results.Any())
             {
